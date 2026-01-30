@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snaky Game </title>
+    <link rel="stylesheet" href="style.css">
+    <link href="../cdn.jsdelivr.net/npm/remixicon%404.8.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
+    <main>
+        <section>
+            <div class="gamename">
+                <h1 class="snake-name">Snake
+                    <span class="game-name">Game</span>
+                </h1>
+            </div>
+            <div class="infos">
+                <div class="info">
+                    <h3>High Score:
+                        <span id="high-score">0</span>
+                    </h3>
+                </div>
+                <div class="info">
+                    <h3>Score:
+                        <span id="score">0</span>
+                    </h3>
+                </div>
+                <div class="info">
+                    <h3>Time:
+                        <span id="timer">00:00</span>
+                    </h3>
+                </div>
+            </div>
+            <div class="board">
+            </div>
+        </section>
+     <div class="modal" id="game-ui">
+    
+    <div class="modal-content" id="start-screen">
+        
+        <div class="snake-decor">
+            <div class="dot fill"></div>
+            <div class="dot fill"></div>
+            <div class="dot head"></div>
+        </div>
+
+        <h1>SNAKE</h1>
+        
+        <div class="stats-box">
+            <span class="trophy">🏆 High Score:</span>
+            <span class="score-val" id="highScoreStart">0</span>
+        </div>
+
+        <div class="controls">
+            <h3>Controls</h3>
+            <div class="keys-layout">
+                <div class="key-group">
+                    <div class="key-row"><div class="key-cap">W</div></div>
+                    <div class="key-row">
+                        <div class="key-cap">A</div>
+                        <div class="key-cap">S</div>
+                        <div class="key-cap">D</div>
+                    </div>
+                </div>
+                <div class="divider">OR</div>
+                <div class="key-group">
+                    <div class="key-row"><div class="key-cap">↑</div></div>
+                    <div class="key-row">
+                        <div class="key-cap">←</div>
+                        <div class="key-cap">↓</div>
+                        <div class="key-cap">→</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="objectives-wrapper">
+            <div class="obj-card gain">
+                <div class="mini-dot food-dot"></div>
+                <div class="obj-text">
+                    <span>EAT</span>
+                    <small>+1 Point</small>
+                </div>
+            </div>
+            <div class="obj-card danger">
+                <div class="mini-dot snake-dot"></div>
+                <div class="obj-text">
+                    <span>AVOID</span>
+                    <small>Walls / Tail</small>
+                </div>
+            </div>
+        </div>
+
+        <button id="start-btn">START GAME</button>
+    </div>
+
+    <div class="modal-content" id="game-over-screen" style="display: none;">
+        
+        <div class="snake-decor crash-decor">
+            <div class="dot fill"></div>
+            <div class="dot fill"></div>
+            <div class="dot crash-head">✖</div>
+        </div>
+
+        <h1 class="game-over-title">GAME OVER</h1>
+        <p class="tagline">Oops! You crashed.</p>
+
+        <div class="final-score-card">
+            <div class="score-label">FINAL SCORE</div>
+            <div class="score-big" id="finalScoreVal">0</div>
+        </div>
+
+        <div class="highscore-badge">
+            🏆 Best: <span id="highScoreEnd">0</span>
+        </div>
+
+        <button id="restart-btn">PLAY AGAIN ↻</button>
+    </div>
+
+</div>
+
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>

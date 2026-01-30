@@ -1,0 +1,443 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* background-color */
+    --bg-pri: rgb(27, 27, 27);
+    --bg-snake: rgb(164, 140, 243);
+    --bg-food: rgb(228, 70, 38);
+    --bg-head: rgb(191, 193, 246);
+    --bg-over: rgb(150, 187, 56);
+
+    /* text colors */
+    --text-pri: rgb(233, 233, 233);
+    --text-sec: rgb(107, 31, 31);
+    /* Spacing variables */
+    --space--xs: 4px;
+    --space--sm: 8px;
+    --space--md: 16px;
+    --space--lg: 24px;
+    --space--xl: 32px;
+    --space--2xl: 40px;
+    --space--3xl: 48px;
+
+    /* Border colors */
+    --bor-pri-col: rgb(99, 99, 99);
+
+    /* Border radius */
+    --bor--radius--xs: 4px;
+    --bor--radius--sm: 8px;
+    --bor--radius--md: 16px;
+    --bor--radius--lg: 24px;
+    --bor--radius--xl: 32px;
+    --bor--radius--2xl: 40px;
+    --bor--radius--3xl: 48px;
+
+}
+
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-pri);
+    color: var(--text-pri);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+main,
+section {
+    width: 100%;
+    height: 100%;
+}
+
+section {
+    padding: var(--space--lg);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space--lg);
+}
+
+section .gamename {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.game-name {
+    color: var(--bg-snake);
+    font-family: cursive;
+}
+
+section .infos {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    padding: var(--space--sm) var(--space--md);
+    background-color: var(--bg-sec);
+    border-radius: var(--bor--radius--sm);
+}
+
+.board {
+    border: 1px solid var(--bor-pri-col);
+    flex-grow: 1;
+    display: grid;
+     touch-action: none;
+}
+
+.block {
+    width: 100%;
+    height: 100%;
+    border-radius: 20%;
+}
+
+.fill {
+    background-color: var(--bg-snake);
+     border: 1px solid var(--bg-pri);
+}
+
+.food {
+    background-color: var(--bg-food);
+}
+.head {
+    background-color: var(--bg-head);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(27, 27, 27, 0.9); /* Dark Overlay */
+    backdrop-filter: blur(8px); /* Blur Effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Common Card Style for Start & Game Over Screens */
+.modal-content {
+    background-color: var(--bg-pri);
+    border: 2px solid var(--bor-pri-col);
+    border-radius: var(--bor--radius--lg);
+    padding: var(--space--xl);
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    position: relative;
+    
+    /* Animation for appearing */
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* =========================================
+   DECORATION & TITLES
+   ========================================= */
+/* Snake Dots Decoration */
+.snake-decor {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: var(--space--md);
+}
+
+.snake-decor .dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.snake-decor .fill { background-color: var(--bg-snake); }
+.snake-decor .head { background-color: var(--bg-head); }
+
+/* Main Title (SNAKE) */
+.modal-content h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--bg-snake);
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(164, 140, 243, 0.4);
+    margin-bottom: var(--space--md);
+    letter-spacing: -1px;
+}
+
+/* Game Over Title */
+.game-over-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--bg-food);
+    margin: 0;
+    text-shadow: 0 0 15px rgba(228, 70, 38, 0.4);
+    margin-bottom: 5px;
+}
+
+.tagline {
+    color: var(--bor-pri-col);
+    font-size: 0.9rem;
+    margin-bottom: var(--space--lg);
+}
+
+/* Crash Icon X */
+.crash-head {
+    background-color: var(--bg-food);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* =========================================
+   STATS & SCORES
+   ========================================= */
+.stats-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 8px 16px;
+    border-radius: 50px;
+    border: 1px solid var(--bor-pri-col);
+    color: var(--text-pri);
+    font-size: 0.9rem;
+    margin-bottom: var(--space--lg);
+}
+
+.score-val, .highscore-badge span {
+    color: var(--bg-over);
+    font-weight: bold;
+}
+
+/* Big Score Box (Game Over) */
+.final-score-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--bor-pri-col);
+    border-radius: var(--bor--radius--md);
+    padding: var(--space--lg);
+    margin-bottom: var(--space--md);
+}
+
+.score-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--bor-pri-col);
+    letter-spacing: 2px;
+}
+
+.score-big {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--text-pri);
+    line-height: 1;
+}
+
+.highscore-badge {
+    margin-bottom: var(--space--xl);
+    color: var(--text-pri);
+    font-size: 0.95rem;
+}
+
+/* =========================================
+   CONTROLS (KEYBOARD VISUALS)
+   ========================================= */
+.controls h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--bor-pri-col);
+    margin-bottom: var(--space--md);
+    letter-spacing: 1px;
+}
+
+.keys-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space--lg);
+    margin-bottom: var(--space--xl);
+}
+
+.key-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.key-row {
+    display: flex;
+    gap: 4px;
+}
+
+.key-cap {
+    width: 30px;
+    height: 30px;
+    background: var(--bg-pri);
+    border: 1px solid var(--bor-pri-col);
+    border-bottom-width: 3px; /* 3D Effect */
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--text-pri);
+    transition: transform 0.1s;
+}
+
+.divider {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--bor-pri-col);
+}
+
+/* =========================================
+   OBJECTIVES (CARDS)
+   ========================================= */
+.objectives-wrapper {
+    display: flex;
+    gap: var(--space--md);
+    margin-bottom: var(--space--xl);
+}
+
+.obj-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--bor-pri-col);
+    border-radius: var(--bor--radius--md);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+}
+
+.mini-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.food-dot {
+    background-color: var(--bg-food);
+    animation: pulse 1s infinite alternate;
+}
+
+.snake-dot {
+    background-color: var(--bg-snake);
+    border: 2px solid var(--bor-pri-col);
+}
+
+.obj-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.obj-text span {
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.obj-text small {
+    font-size: 0.65rem;
+    color: var(--bor-pri-col);
+}
+
+.gain span { color: var(--bg-over); }
+.danger span { color: var(--bg-food); }
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+button {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: var(--bor--radius--lg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--bg-pri); /* Text color dark */
+}
+
+/* Start Button */
+#start-btn {
+    background-color: var(--bg-food); /* Orange/Red */
+    box-shadow: 0 5px 0 rgb(160, 50, 20);
+}
+
+#start-btn:hover {
+    transform: translateY(-2px);
+    background-color: var(--bg-over); /* Green on hover */
+    box-shadow: 0 7px 0 rgb(100, 140, 40);
+}
+
+/* Restart Button */
+#restart-btn {
+    background-color: var(--bg-snake); /* Purple */
+    box-shadow: 0 5px 0 rgb(100, 80, 180);
+    color: white;
+}
+
+#restart-btn:hover {
+    transform: translateY(-2px);
+    background-color: var(--bg-head);
+    box-shadow: 0 7px 0 rgb(100, 80, 180);
+}
+
+button:active {
+    transform: translateY(3px) !important;
+    box-shadow: none !important;
+}
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    100% { transform: scale(1.1); opacity: 1; }
+}
+@media (max-width: 280px) {
+
+    html, body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    main, section {
+        height: 100%;
+    }
+
+    section {
+        padding: 12px; /* mobile padding reduce */
+    }
+
+    .board {
+        flex: 1;
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+    }
+}
