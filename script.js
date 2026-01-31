@@ -21,7 +21,11 @@ const ScoreElem = document.querySelector("#score")
 const TimerElem = document.querySelector("#timer")
 const finalScoreVal = document.querySelector('#finalScoreVal')
 function getBlockSize() {
-    return window.innerWidth <= 600 ? 20 : 30;
+    const w = window.innerWidth;
+    if (w <= 420) return 16;
+    if (w <= 600) return 20;
+    if (w <= 900) return 24;
+    return 30;
 }
 
 let blockWidth = getBlockSize();
@@ -262,7 +266,24 @@ window.addEventListener("load", () => {
     spawnFood();
 });
 
-window.addEventListener("resize", () => location.reload());
+// Debounced resize: recalculate block size and rebuild board without full reload
+let __resizeTimer = null;
+window.addEventListener("resize", () => {
+    clearTimeout(__resizeTimer);
+    __resizeTimer = setTimeout(() => {
+        blockWidth = getBlockSize();
+        blockHeight = blockWidth;
+        // rebuild board and reset snake/food positions
+        setupBoard();
+        resetSnake();
+        spawnFood();
+        // if game was running, update interval to match new layout
+        if (interval) {
+            clearInterval(interval);
+            updateGameInterval();
+        }
+    }, 220);
+});
 
 
 function render() {

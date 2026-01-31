@@ -35,6 +35,8 @@
   --bor--radius--xl: 32px;
   --bor--radius--2xl: 40px;
   --bor--radius--3xl: 48px;
+  /* secondary background for panels */
+  --bg-sec: rgba(255, 255, 255, 0.03);
 }
 
 html,
@@ -181,6 +183,30 @@ section .infos {
   flex-grow: 1;
   display: grid;
   touch-action: none;
+}
+
+/* Responsive tweaks: make the game board square and adapt layout on small screens */
+.board {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 900px) {
+  section { padding: var(--space--md); }
+  .infos { flex-wrap: wrap; gap: 8px; }
+  .infos .info { flex: 1 1 45%; }
+  .modal-content { max-width: 92%; width: 92%; padding: 18px; }
+  .modal-content h1 { font-size: 2.2rem; }
+}
+
+@media (max-width: 420px) {
+  section { padding: var(--space--sm); }
+  .gamename .snake-name { font-size: 1.4rem; }
+  .modal-content h1 { font-size: 1.8rem; }
+  .stats-box { font-size: 0.8rem; padding: 6px 10px; }
+  .board { max-width: 100%; aspect-ratio: 1 / 1; }
 }
 
 .block {
